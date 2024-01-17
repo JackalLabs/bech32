@@ -1,9 +1,16 @@
 import { CharSet, CharSetMap } from '@/utils/globals'
 import type { IDecoded, IBech32Handler } from '@/interfaces'
 
+/**
+ * @class {IBech32Handler} Bech32Handler
+ */
 export class Bech32Handler implements IBech32Handler {
   protected readonly encodingConstant: number
 
+  /**
+   * Create Bech32Handler with either bech32 or bech32m encoding.
+   * @param {"bech32" | "bech32m"} encoding - Desired encoding.
+   */
   constructor(encoding: 'bech32' | 'bech32m') {
     if (encoding === 'bech32') {
       this.encodingConstant = 1;
@@ -14,6 +21,14 @@ export class Bech32Handler implements IBech32Handler {
     }
   }
 
+  /**
+   * Convert between bech32 prefixes. Bundles decode() and encode() for convenience.
+   * @memberof Bech32Handler
+   * @param {string} prefix - New prefix.
+   * @param {string} existingBech32 - Existing bech32 to update.
+   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
+   * @returns {string}
+   */
   swapPrefix(prefix: string, existingBech32: string, LIMIT: number = 90): string {
     try {
       const decoded = this.decode(existingBech32, LIMIT)
@@ -23,6 +38,14 @@ export class Bech32Handler implements IBech32Handler {
     }
   }
 
+  /**
+   * Accepts prefix and TypedArray or number[] to create new bech32.
+   * @memberof Bech32Handler
+   * @param {string} prefix - New prefix.
+   * @param {ArrayLike<number>} words - TypedArray or number[] to use as base.
+   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
+   * @returns {string}
+   */
   encode(prefix: string, words: ArrayLike<number>, LIMIT: number = 90): string {
     try {
       if (prefix.length + 7 + words.length > LIMIT) {
@@ -54,6 +77,13 @@ export class Bech32Handler implements IBech32Handler {
     }
   }
 
+  /**
+   * Convert bech32 to component prefix and "words" TypedArray or number[].
+   * @memberof Bech32Handler
+   * @param {string} str - Existing bech32 to update.
+   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
+   * @returns {IDecoded}
+   */
   decode(str: string, LIMIT: number = 90): IDecoded {
     try {
       if (str.length < 8) {
@@ -104,6 +134,12 @@ export class Bech32Handler implements IBech32Handler {
     }
   }
 
+  /**
+   * Converts prefix-less buffer to "words" number[].
+   * @memberof Bech32Handler
+   * @param {ArrayLike<number>} bytes - TypedArray or number[] from string.
+   * @returns {number[]}
+   */
   toWords(bytes: ArrayLike<number>): number[] {
     try {
       return this.convert(bytes, 8, 5, true);
@@ -112,6 +148,12 @@ export class Bech32Handler implements IBech32Handler {
     }
   }
 
+  /**
+   * Converts "words" TypedArray or number[] to value ready for conversion to a string.
+   * @memberof Bech32Handler
+   * @param {ArrayLike<number>} words - "Words" as TypedArray or number[].
+   * @returns {number[]}
+   */
   fromWords(words: ArrayLike<number>): number[] {
     try {
       return this.convert(words, 5, 8, false);
