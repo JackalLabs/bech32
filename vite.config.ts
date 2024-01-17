@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite"
 
 import typescript from "@rollup/plugin-typescript"
@@ -9,6 +10,7 @@ import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   base: './',
+  test: {},
   plugins: [
     tsconfigPaths(),
     dts({

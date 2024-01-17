@@ -31,6 +31,8 @@
   "scripts": {
     "build": "tsc && vite build",
     "packit": "npm run build && npm pack --pack-destination packs",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
     "gen-docs": "npx typedoc"
   },
   "contributors": [
