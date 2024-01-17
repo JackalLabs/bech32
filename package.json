@@ -1,8 +1,20 @@
 {
-  "name": "@jackallabs/sample",
+  "name": "@jackallabs/bech32",
   "version": "0.0.0",
-  "description": "SAMPLE DESCRIPTION",
-  "keywords": [],
+  "description": "Bech32 encoding / decoding",
+  "keywords": [
+    "base32",
+    "bech32",
+    "bech32m",
+    "bitcoin",
+    "cosmos",
+    "crypto",
+    "crytography",
+    "decode",
+    "decoding",
+    "encode",
+    "encoding"
+  ],
   "exports": {
     ".": {
       "import": {
@@ -28,19 +40,19 @@
       "url": "https://jackallabs.io"
     },
     {
-      "name": "Example",
-      "email": "example@jackallabs.io"
+      "name": "Erin Rivas",
+      "email": "erin@jackallabs.io"
     }
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JackalLabs/template_vite_module.git"
+    "url": "git+https://github.com/JackalLabs/bech32.git"
   },
   "bugs": {
-    "url": "https://github.com/JackalLabs/template_vite_module/issues"
+    "url": "https://github.com/JackalLabs/bech32/issues"
   },
-  "homepage": "https://github.com/JackalLabs/template_vite_module/#README",
+  "homepage": "https://github.com/JackalLabs/bech32/#README",
   "dependencies": {},
   "devDependencies": {
     "@btmills/prettier": "3.0.3",

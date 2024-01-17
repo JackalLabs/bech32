@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/template_vite_module.iml" filepath="$PROJECT_DIR$/.idea/template_vite_module.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/bech32.iml" filepath="$PROJECT_DIR$/.idea/bech32.iml" />
     </modules>
   </component>
 </project>
