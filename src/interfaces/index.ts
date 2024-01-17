@@ -1,3 +1,3 @@
 export * from '@/interfaces/classes'
 
-export * from '@/interfaces/IGenericObject'
+export * from '@/interfaces/IDecoded'

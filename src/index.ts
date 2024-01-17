@@ -1,3 +1,5 @@
-export * from '@/classes'
+import { Bech32Handler } from '@/classes'
 export * from '@/interfaces'
-export * from '@/types'
+
+export const bech32 = new Bech32Handler('bech32')
+export const bech32m = new Bech32Handler('bech32m')
