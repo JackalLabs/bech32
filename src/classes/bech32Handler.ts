@@ -39,6 +39,25 @@ export class Bech32Handler implements IBech32Handler {
   }
 
   /**
+   * Async wrapper for swapPrefix(). Convert between bech32 prefixes. Bundles decode() and encode() for convenience.
+   * @memberof Bech32Handler
+   * @param {string} prefix - New prefix.
+   * @param {string} existingBech32 - Existing bech32 to update.
+   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
+   * @returns {Promise<string>}
+   */
+  async swapPrefixAsync(prefix: string, existingBech32: string, LIMIT: number = 90): Promise<string> {
+    return new Promise((resolve, reject) => {
+      try {
+        const base = this.swapPrefix(prefix, existingBech32, LIMIT)
+        resolve(base)
+      } catch (err) {
+        reject(err)
+      }
+    })
+  }
+
+  /**
    * Accepts prefix and TypedArray or number[] to create new bech32.
    * @memberof Bech32Handler
    * @param {string} prefix - New prefix.
@@ -75,6 +94,25 @@ export class Bech32Handler implements IBech32Handler {
     } catch (err) {
       throw err
     }
+  }
+
+  /**
+   * Async wrapper for encode(). Accepts prefix and TypedArray or number[] to create new bech32.
+   * @memberof Bech32Handler
+   * @param {string} prefix - New prefix.
+   * @param {ArrayLike<number>} words - TypedArray or number[] to use as base.
+   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
+   * @returns {Promise<string>}
+   */
+  async encodeAsync(prefix: string, words: ArrayLike<number>, LIMIT: number = 90): Promise<string> {
+    return new Promise((resolve, reject) => {
+      try {
+        const base = this.encode(prefix, words, LIMIT)
+        resolve(base)
+      } catch (err) {
+        reject(err)
+      }
+    })
   }
 
   /**
@@ -135,6 +173,24 @@ export class Bech32Handler implements IBech32Handler {
   }
 
   /**
+   * Async wrapper for decode(). Convert bech32 to component prefix and "words" TypedArray or number[].
+   * @memberof Bech32Handler
+   * @param {string} str - Existing bech32 to update.
+   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
+   * @returns {Promise<IDecoded>}
+   */
+  async decodeAsync(str: string, LIMIT: number = 90): Promise<IDecoded> {
+    return new Promise((resolve, reject) => {
+      try {
+        const base = this.decode(str, LIMIT)
+        resolve(base)
+      } catch (err) {
+        reject(err)
+      }
+    })
+  }
+
+  /**
    * Converts prefix-less buffer to "words" number[].
    * @memberof Bech32Handler
    * @param {ArrayLike<number>} bytes - TypedArray or number[] from string.
@@ -149,6 +205,23 @@ export class Bech32Handler implements IBech32Handler {
   }
 
   /**
+   * Async wrapper for toWords(). Converts prefix-less buffer to "words" number[].
+   * @memberof Bech32Handler
+   * @param {ArrayLike<number>} bytes - TypedArray or number[] from string.
+   * @returns {Promise<number[]>}
+   */
+  async toWordsAsync(bytes: ArrayLike<number>): Promise<number[]> {
+    return new Promise((resolve, reject) => {
+      try {
+        const base = this.toWords(bytes)
+        resolve(base)
+      } catch (err) {
+        reject(err)
+      }
+    })
+  }
+
+  /**
    * Converts "words" TypedArray or number[] to value ready for conversion to a string.
    * @memberof Bech32Handler
    * @param {ArrayLike<number>} words - "Words" as TypedArray or number[].
@@ -160,6 +233,23 @@ export class Bech32Handler implements IBech32Handler {
     } catch (err) {
       throw err
     }
+  }
+
+  /**
+   * Async wrapper for fromWords(). Converts "words" TypedArray or number[] to value ready for conversion to a string.
+   * @memberof Bech32Handler
+   * @param {ArrayLike<number>} words - "Words" as TypedArray or number[].
+   * @returns {Promise<number[]>}
+   */
+  async fromWordsAsync(words: ArrayLike<number>): Promise<number[]> {
+    return new Promise((resolve, reject) => {
+      try {
+        const base = this.fromWords(words)
+        resolve(base)
+      } catch (err) {
+        reject(err)
+      }
+    })
   }
 
   protected polymodStep(pre: number): number {
