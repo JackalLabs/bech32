@@ -1,6 +1,9 @@
 import type { IDecoded } from '@/interfaces'
 
 export interface IBech32Handler {
+  checkIfValid(possibleBech32: string): boolean
+  checkIfValidAsync(possibleBech32: string): Promise<boolean>
+
   swapPrefix(prefix: string, existingBech32: string, LIMIT?: number): string
   swapPrefixAsync(prefix: string, existingBech32: string, LIMIT?: number): Promise<string>
 
