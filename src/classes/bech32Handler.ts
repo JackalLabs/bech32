@@ -24,11 +24,12 @@ export class Bech32Handler implements IBech32Handler {
   /**
    * Check if string is valid bech32/bech32m. Console logs error if present.
    * @param {string} possibleBech32 - String to check.
+   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
    * @returns {boolean}
    */
-  checkIfValid(possibleBech32: string): boolean {
+  checkIfValid(possibleBech32: string, LIMIT: number = 90): boolean {
     try {
-      const decoded = this.decode(possibleBech32)
+      const decoded = this.decode(possibleBech32, LIMIT)
       return decoded.prefix.length > 0 && decoded.words.length > 0
     } catch (err) {
       console.error('checkIfValid():', err)
@@ -39,10 +40,11 @@ export class Bech32Handler implements IBech32Handler {
   /**
    * Async wrapper for checkIfValid(). Check if string is valid bech32/bech32m. Console logs error if present.
    * @param {string} possibleBech32 - String to check.
+   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
    * @returns {Promise<boolean>}
    */
-  async checkIfValidAsync(possibleBech32: string): Promise<boolean> {
-    return await this.decodeAsync(possibleBech32)
+  async checkIfValidAsync(possibleBech32: string, LIMIT: number = 90): Promise<boolean> {
+    return await this.decodeAsync(possibleBech32, LIMIT)
       .then((result) => result.prefix.length > 0 && result.words.length > 0)
       .catch((err) => {
         console.error('checkIfValidAsync():', err)
