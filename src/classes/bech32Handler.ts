@@ -24,12 +24,12 @@ export class Bech32Handler implements IBech32Handler {
   /**
    * Check if string is valid bech32/bech32m. Console logs error if present.
    * @param {string} possibleBech32 - String to check.
-   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
+   * @param {number} [limit] - Optional character limit, defaults to 90.
    * @returns {boolean}
    */
-  checkIfValid(possibleBech32: string, LIMIT: number = 90): boolean {
+  checkIfValid(possibleBech32: string, limit: number = 90): boolean {
     try {
-      const decoded = this.decode(possibleBech32, LIMIT)
+      const decoded = this.decode(possibleBech32, limit)
       return decoded.prefix.length > 0 && decoded.words.length > 0
     } catch (err) {
       console.error('checkIfValid():', err)
@@ -40,11 +40,11 @@ export class Bech32Handler implements IBech32Handler {
   /**
    * Async wrapper for checkIfValid(). Check if string is valid bech32/bech32m. Console logs error if present.
    * @param {string} possibleBech32 - String to check.
-   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
+   * @param {number} [limit] - Optional character limit, defaults to 90.
    * @returns {Promise<boolean>}
    */
-  async checkIfValidAsync(possibleBech32: string, LIMIT: number = 90): Promise<boolean> {
-    return await this.decodeAsync(possibleBech32, LIMIT)
+  async checkIfValidAsync(possibleBech32: string, limit: number = 90): Promise<boolean> {
+    return await this.decodeAsync(possibleBech32, limit)
       .then((result) => result.prefix.length > 0 && result.words.length > 0)
       .catch((err) => {
         console.error('checkIfValidAsync():', err)
@@ -57,17 +57,17 @@ export class Bech32Handler implements IBech32Handler {
    * @memberof Bech32Handler
    * @param {string} prefix - New prefix.
    * @param {string} existingBech32 - Existing bech32 to update.
-   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
+   * @param {number} [limit] - Optional character limit, defaults to 90.
    * @returns {string}
    */
   swapPrefix(
     prefix: string,
     existingBech32: string,
-    LIMIT: number = 90,
+    limit: number = 90,
   ): string {
     try {
-      const decoded = this.decode(existingBech32, LIMIT)
-      return this.encode(prefix, decoded.words, LIMIT)
+      const decoded = this.decode(existingBech32, limit)
+      return this.encode(prefix, decoded.words, limit)
     } catch (err) {
       throw err
     }
@@ -78,17 +78,17 @@ export class Bech32Handler implements IBech32Handler {
    * @memberof Bech32Handler
    * @param {string} prefix - New prefix.
    * @param {string} existingBech32 - Existing bech32 to update.
-   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
+   * @param {number} [limit] - Optional character limit, defaults to 90.
    * @returns {Promise<string>}
    */
   async swapPrefixAsync(
     prefix: string,
     existingBech32: string,
-    LIMIT: number = 90,
+    limit: number = 90,
   ): Promise<string> {
     return new Promise((resolve, reject) => {
       try {
-        const base = this.swapPrefix(prefix, existingBech32, LIMIT)
+        const base = this.swapPrefix(prefix, existingBech32, limit)
         resolve(base)
       } catch (err) {
         reject(err)
@@ -101,12 +101,12 @@ export class Bech32Handler implements IBech32Handler {
    * @memberof Bech32Handler
    * @param {string} prefix - New prefix.
    * @param {ArrayLike<number>} words - TypedArray or number[] to use as base.
-   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
+   * @param {number} [limit] - Optional character limit, defaults to 90.
    * @returns {string}
    */
-  encode(prefix: string, words: ArrayLike<number>, LIMIT: number = 90): string {
+  encode(prefix: string, words: ArrayLike<number>, limit: number = 90): string {
     try {
-      if (prefix.length + 7 + words.length > LIMIT) {
+      if (prefix.length + 7 + words.length > limit) {
         throw new TypeError('Exceeds length limit')
       }
       prefix = prefix.toLowerCase()
@@ -140,17 +140,17 @@ export class Bech32Handler implements IBech32Handler {
    * @memberof Bech32Handler
    * @param {string} prefix - New prefix.
    * @param {ArrayLike<number>} words - TypedArray or number[] to use as base.
-   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
+   * @param {number} [limit] - Optional character limit, defaults to 90.
    * @returns {Promise<string>}
    */
   async encodeAsync(
     prefix: string,
     words: ArrayLike<number>,
-    LIMIT: number = 90,
+    limit: number = 90,
   ): Promise<string> {
     return new Promise((resolve, reject) => {
       try {
-        const base = this.encode(prefix, words, LIMIT)
+        const base = this.encode(prefix, words, limit)
         resolve(base)
       } catch (err) {
         reject(err)
@@ -162,15 +162,15 @@ export class Bech32Handler implements IBech32Handler {
    * Convert bech32 to component prefix and "words" TypedArray or number[].
    * @memberof Bech32Handler
    * @param {string} str - Existing bech32 to update.
-   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
+   * @param {number} [limit] - Optional character limit, defaults to 90.
    * @returns {IDecoded}
    */
-  decode(str: string, LIMIT: number = 90): IDecoded {
+  decode(str: string, limit: number = 90): IDecoded {
     try {
       if (str.length < 8) {
         throw new Error(str + ' too short')
       }
-      if (str.length > LIMIT) {
+      if (str.length > limit) {
         throw new Error('Exceeds length limit')
       }
       // don't allow mixed case
@@ -219,13 +219,13 @@ export class Bech32Handler implements IBech32Handler {
    * Async wrapper for decode(). Convert bech32 to component prefix and "words" TypedArray or number[].
    * @memberof Bech32Handler
    * @param {string} str - Existing bech32 to update.
-   * @param {number} [LIMIT] - Optional character limit, defaults to 90.
+   * @param {number} [limit] - Optional character limit, defaults to 90.
    * @returns {Promise<IDecoded>}
    */
-  async decodeAsync(str: string, LIMIT: number = 90): Promise<IDecoded> {
+  async decodeAsync(str: string, limit: number = 90): Promise<IDecoded> {
     return new Promise((resolve, reject) => {
       try {
-        const base = this.decode(str, LIMIT)
+        const base = this.decode(str, limit)
         resolve(base)
       } catch (err) {
         reject(err)
