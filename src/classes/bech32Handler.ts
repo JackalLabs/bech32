@@ -1,5 +1,5 @@
 import { CharSet, CharSetMap } from '@/utils/globals'
-import type { IDecoded, IBech32Handler } from '@/interfaces'
+import type { IBech32Handler, IDecoded } from '@/interfaces'
 
 /**
  * @class {IBech32Handler} Bech32Handler
@@ -9,7 +9,7 @@ export class Bech32Handler implements IBech32Handler {
 
   /**
    * Create Bech32Handler with either bech32 or bech32m encoding.
-   * @param {"bech32" | "bech32m"} encoding - Desired encoding.
+   * @param {'bech32' | 'bech32m'} encoding - Desired encoding.
    */
   constructor(encoding: 'bech32' | 'bech32m') {
     if (encoding === 'bech32') {

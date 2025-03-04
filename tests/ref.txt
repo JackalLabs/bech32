@@ -1,22 +1,3 @@
-import { describe, test, expect } from "vitest";
-import { bech32, bech32m } from '@/index'
-import { fixtures } from '@/__tests__/fixtures'
-
-describe("bech32", () => {
-  test("fromWords() fails correctly", async () => {
-    expect(() => bech32.fromWords(fixtures.fromWords.invalid[0].words)).toThrowError('Excess padding')
-    expect(() => bech32.fromWords(fixtures.fromWords.invalid[1].words)).toThrowError('Non-zero padding')
-  });
-});
-
-describe("bech32m", () => {
-  test("fromWords() fails correctly", async () => {
-    expect(() => bech32m.fromWords(fixtures.fromWords.invalid[0].words)).toThrowError('Excess padding')
-    expect(() => bech32m.fromWords(fixtures.fromWords.invalid[1].words)).toThrowError('Non-zero padding')
-  });
-});
-
-
 /* REFERENCE */
 /*
 

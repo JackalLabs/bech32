@@ -31,5 +31,5 @@ export const CharSetMap: Record<string, number> = {
   'w': 14,
   'x': 6,
   'y': 4,
-  'z': 2
+  'z': 2,
 }

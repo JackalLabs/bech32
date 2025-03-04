@@ -1,48 +1,57 @@
-/// <reference types="vitest" />
-import { defineConfig } from "vite"
+import { defineConfig } from 'vite'
 
-import typescript from "@rollup/plugin-typescript"
-import { resolve } from "path"
-import { copyFileSync } from "fs"
-import { typescriptPaths } from "rollup-plugin-typescript-paths"
+import typescript from '@rollup/plugin-typescript'
+import { resolve } from 'path'
+import { typescriptPaths } from 'rollup-plugin-typescript-paths'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import dts from 'vite-plugin-dts'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default defineConfig({
   base: './',
-  test: {},
   plugins: [
     tsconfigPaths(),
     dts({
-      afterBuild: () => {
-        copyFileSync("dist/index.d.ts", "dist/index.d.mts")
-      },
-      include: ["src"],
+      include: ['src'],
       rollupTypes: true,
-      logLevel: 'error'
-    })
+      logLevel: 'error',
+    }),
   ],
   resolve: {
     preserveSymlinks: true,
     alias: [
       {
-        find: "@",
-        replacement: resolve(__dirname, "./src"),
+        find: '@',
+        replacement: resolve(__dirname, './src'),
       },
     ],
-    extensions: ['.ts']
+    extensions: ['.ts'],
   },
   build: {
     manifest: true,
     minify: true,
     reportCompressedSize: true,
-    lib: {
-      entry: resolve(__dirname, "src/index.ts"),
-      fileName: (format) => `index.${format}.js`,
-      formats: ['es'],
-      name: 'SAMPLE'
-    },
     rollupOptions: {
+      input: resolve(__dirname, 'src/index.ts'),
+      preserveEntrySignatures: 'allow-extension',
+      output: [
+        {
+          dir: './dist',
+          entryFileNames: 'index.cjs.js',
+          format: 'cjs',
+          name: 'Bech32',
+          plugins: [],
+        },
+        {
+          dir: './dist',
+          entryFileNames: 'index.esm.js',
+          format: 'esm',
+          name: 'Bech32',
+          plugins: [
+            nodePolyfills({ include: ['buffer', 'util'] }),
+          ],
+        },
+      ],
       external: [],
       plugins: [
         typescriptPaths({
