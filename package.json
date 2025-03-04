@@ -1,6 +1,6 @@
 {
   "name": "@jackallabs/bech32",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Bech32 encoding / decoding",
   "keywords": [
     "base32",
